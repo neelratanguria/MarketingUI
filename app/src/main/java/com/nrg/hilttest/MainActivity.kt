@@ -6,13 +6,18 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.outlined.AccountBox
+import androidx.compose.material.icons.outlined.ArrowDropDown
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.runtime.Composable
@@ -119,7 +124,7 @@ fun Content() {
             ) {
                 BottomNavigationItem(selected = true, onClick = { /*TODO*/ }, icon =  {
                     Icon(
-                        imageVector = Icons.Outlined.Home,
+                        imageVector = Icons.Filled.Home,
                         contentDescription = "Home icon"
                     )
                 })
@@ -170,6 +175,99 @@ fun Content() {
                     ProcessItem(processList[it])
                 }
             }
+
+            Spacer(modifier = Modifier.height(30.dp))
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 16.dp, end = 16.dp),
+               horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.Bottom
+            ) {
+                Row(
+                    verticalAlignment = Alignment.Bottom,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(
+                        text = "Flows List",
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 30.sp
+                    )
+                    IconButton(onClick = { /*TODO*/ }) {
+                        Icon(
+                            imageVector = Icons.Outlined.ArrowDropDown,
+                            contentDescription = "Drop down menu",
+                            tint = Color.Black
+                        )
+                    }
+                }
+
+                Text(
+                    text = "See all",
+                    color = Color.Gray,
+                    modifier = Modifier.padding(end = 20.dp),
+                    fontSize = 20.sp
+                )
+            }
+            
+            Spacer(modifier = Modifier.height(20.dp))
+
+            LazyColumn(verticalArrangement = Arrangement.spacedBy(16.dp)) {
+                itemsIndexed(flows) {index, flow ->
+                    FlowItem(flow)
+
+                    if (index < flows.lastIndex ) {
+                        Divider(
+                            color = Color.LightGray,
+                            modifier = Modifier.fillMaxWidth()
+                                .padding(horizontal = 20.dp)
+                                .padding(top = 20.dp),
+                            thickness = 1.dp
+                        )
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun FlowItem(flow: String) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp),
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Column(
+            verticalArrangement = Arrangement.SpaceBetween,
+            horizontalAlignment = Alignment.Start
+        ) {
+            Text(
+                text = flow.capitalizeWords(),
+                color = Color.Black,
+                fontWeight = FontWeight.Bold,
+                fontSize = 22.sp
+            )
+            Text(
+                text = "3 mintues ago",
+                color = Color.Gray,
+                fontSize = 15.sp
+            )
+        }
+
+        IconButton(
+            onClick = { /*TODO*/ },
+            modifier = Modifier
+                .clip(CircleShape)
+                .background(GatoradeGreen)
+        ) {
+            Icon(
+                imageVector = Icons.Filled.Add,
+                contentDescription = "Add button",
+                modifier = Modifier.padding(7.dp)
+            )
         }
     }
 }
