@@ -166,7 +166,49 @@ fun Content() {
                 item {
                     LeadingRowItem()
                 }
+                items(processList.size) {
+                    ProcessItem(processList[it])
+                }
             }
+        }
+    }
+}
+
+@Composable
+fun ProcessItem(process: String) {
+    Box(
+        modifier = Modifier
+            .width(200.dp)
+            .clip(RoundedCornerShape(20.dp))
+            .background(color = Color.White)
+    ) {
+        Column(
+            modifier = Modifier.padding(20.dp)
+        ) {
+            Box(
+                modifier = Modifier
+                    .clip(RoundedCornerShape(10.dp))
+                    .background(LightWheat),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = "Review",
+                    fontWeight = FontWeight.Bold,
+                    color = Color.Black,
+                    modifier = Modifier.padding(8.dp)
+                )
+            }
+
+            Spacer(
+                modifier = Modifier
+                    .height(29.dp)
+            )
+            
+            Text(
+                text = process,
+                fontSize = 18.sp,
+                fontWeight = FontWeight.Bold
+            )
         }
     }
 }
@@ -180,16 +222,17 @@ fun LeadingRowItem() {
             .drawBehind {
                 drawRoundRect(
                     color = Color.Gray,
-                    cornerRadius = CornerRadius(8.dp.toPx()),
                     style = Stroke(
                         width = 2f,
                         pathEffect = PathEffect.dashPathEffect(
                             floatArrayOf(10f, 10f),
                             0f
                         )
-                    )
+                    ),
+                    cornerRadius = CornerRadius(30.dp.toPx()),
                 )
             },
+
         contentAlignment = Alignment.Center
     ) {
         Column(
